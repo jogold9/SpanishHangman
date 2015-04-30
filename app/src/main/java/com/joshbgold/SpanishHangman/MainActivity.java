@@ -16,12 +16,15 @@ public class MainActivity extends Activity {
     private String hiddenWord = "";
     private char hiddenWordChars[];
     private String userGuess ="";
-    private char userGuessChar;
+    private int matchPosition;
+    private int mHits;
+    private int mMisses;
+
     private TextView someAnswer;
     private Button checkButton;
     private Button exitButton;
     private EditText guessText;
-    private int matchPosition;
+
 
 
     @Override
@@ -69,14 +72,18 @@ public class MainActivity extends Activity {
     private void checkAnswer(){
         //take the user's letter guess
         userGuess = guessText.getText().toString().toLowerCase();
-        userGuessChar[] = userGuess.toCharArray();
+        char[] userGuessChar = userGuess.toCharArray();
 
         //if there were matches, get index of match(es) locations
         matchPosition = word.indexOf(userGuess);
 
         if (matchPosition != -1){
             hiddenWordChars = hiddenWord.toCharArray();
-            hiddenWordChars[matchPosition] = userGuessChar;
+            hiddenWordChars[matchPosition] = userGuessChar[0];
+            hiddenWord = String.valueOf(hiddenWordChars);
+            mHits++;
+
+            someAnswer.setText(hiddenWord);
 
             Toast.makeText(MainActivity.this, "'" + userGuess + "' is in the mystery word.",
                     Toast.LENGTH_LONG).show();
@@ -84,13 +91,10 @@ public class MainActivity extends Activity {
         else {
             Toast.makeText(MainActivity.this, "'" + userGuess + "' is not in the mystery word.",
                     Toast.LENGTH_LONG).show();
+            mMisses++;
         }
 
-        //display any matches for the guess in the mystery word
-
-
-
-        //Optional: display the incorrect letter guesses
+        //Display the incorrect letter guesses
 
         //clear the letter from the edit text area
         guessText.setHint("");
