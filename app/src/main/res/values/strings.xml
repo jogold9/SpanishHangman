@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">Spanish Verb Hangman</string>
+    <string name="app_name">Spanish Hangman</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 </resources>

@@ -13,7 +13,7 @@ public class WordList {
     String EnglishDefs[] = {};
 
     //return a random word from the list
-    private String getWord() {
+    public String getWord() {
         int i = new Random().nextInt(SpanishVerbs.length);
         return SpanishVerbs[i];
     }
