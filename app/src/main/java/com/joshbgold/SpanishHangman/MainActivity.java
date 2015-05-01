@@ -14,11 +14,12 @@ public class MainActivity extends Activity {
 
     private WordList wordList = new WordList();
     private String word = "";
+    private char wordChars[];
     private String hiddenWord = "";
     private char hiddenWordChars[];
     private String userGuess ="";
+    char[] userGuessChar;
     boolean match = false;
-    private int matchPosition;
     private int guessesRemaining = 6;
 
     private TextView someAnswer;
@@ -92,19 +93,21 @@ public class MainActivity extends Activity {
             return;
         }
 
-        char[] userGuessChar = userGuess.toCharArray();
+        userGuessChar = userGuess.toCharArray();
+        wordChars = word.toCharArray();
 
         for (int j = 0; j < word.length(); j++) {
 
             //if there were matches, get index of match(es) locations
-            matchPosition = word.indexOf(userGuess);
 
-            if (word.indexOf(userGuess) != -1) {
+
+            if (word.contains(userGuess)) {
                 hiddenWordChars = hiddenWord.toCharArray();
-                hiddenWordChars[matchPosition] = userGuessChar[0];
-                hiddenWord = String.valueOf(hiddenWordChars);
-
-                someAnswer.setText(hiddenWord);
+                if (wordChars[j] == userGuessChar[0]) {
+                    hiddenWordChars[j] = userGuessChar[0];
+                    hiddenWord = String.valueOf(hiddenWordChars);
+                    someAnswer.setText(hiddenWord);
+                }
                 match = true;
             }
         }
