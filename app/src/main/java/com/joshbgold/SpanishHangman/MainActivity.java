@@ -32,12 +32,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         someAnswer = (TextView) findViewById(R.id.answerText);
         checkButton = (Button) findViewById(R.id.submitGuessButton);
         exitButton = (Button) findViewById(R.id.exitButton);
         guessText = (EditText) findViewById(R.id.letterGuess);
-
 
         playGame();
 
@@ -71,6 +69,8 @@ public class MainActivity extends Activity {
             hiddenWord += '*';
         }
 
+        someAnswer.setText(hiddenWord);
+
         //For testing, will remove this line later
          Toast.makeText(MainActivity.this, hiddenWord + " " + word, Toast.LENGTH_SHORT).show();
     }
@@ -80,7 +80,6 @@ public class MainActivity extends Activity {
         hiddenWord = "";
         userGuess ="";
         match = false;
-        //matchPosition = 0;
         guessesRemaining = 6;
     }
 
@@ -98,9 +97,7 @@ public class MainActivity extends Activity {
 
         for (int j = 0; j < word.length(); j++) {
 
-            //if there were matches, get index of match(es) locations
-
-
+            // see if word contains the matching letter, replace asterisks with any matches for the guessed letter
             if (word.contains(userGuess)) {
                 hiddenWordChars = hiddenWord.toCharArray();
                 if (wordChars[j] == userGuessChar[0]) {
@@ -157,22 +154,33 @@ public class MainActivity extends Activity {
     void checkForLoss(){
         if (guessesRemaining == 0){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Sorry you ran out of guesses")
-                    .setIcon(R.mipmap.ic_launcher)
-                    .setMessage("The answer was " + word + ".")
-                    .setCancelable(false)
-                    .setNegativeButton("OK",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
+
+            builder.setTitle("You ran out of attempts");
+            builder.setMessage("The answer was " + word + ". Play again?");
+
+            builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface dialog, int which) {
+                    resetVars();
+                    playGame();
+                    dialog.dismiss();
+                }
+            });
+
+            builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do nothing
+                    dialog.dismiss();
+                    finish();
+                }
+            });
+
             AlertDialog alert = builder.create();
             alert.show();
-
-            resetVars();
-            playGame();
-
         }
+
         else{
             return;
         }
