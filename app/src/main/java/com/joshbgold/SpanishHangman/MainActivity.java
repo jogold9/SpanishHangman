@@ -3,7 +3,9 @@ package com.joshbgold.SpanishHangman;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,13 +16,16 @@ public class MainActivity extends Activity {
 
     private WordList wordList = new WordList();
     private String word = "";
+    private String englishDef = "";
     private char wordChars[];
     private String hiddenWord = "";
     private char hiddenWordChars[];
     private String userGuess ="";
     char[] userGuessChar;
+    private String guessedletters = "";
+    private int guessesRemaining = 7;
+    private int index = 0;
     boolean match = false;
-    private int guessesRemaining = 6;
 
     private TextView someAnswer;
     private Button checkButton;
@@ -64,6 +69,7 @@ public class MainActivity extends Activity {
         //get the word we are guessing letters for
         word = wordList.getWord();
 
+
         //create a series of dashes or asterisks to represent the number of letters
         for (int i=0; i < word.length(); i++){
             hiddenWord += '*';
@@ -72,7 +78,7 @@ public class MainActivity extends Activity {
         someAnswer.setText(hiddenWord);
 
         //For testing, will remove this line later
-         Toast.makeText(MainActivity.this, hiddenWord + " " + word, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainActivity.this, hiddenWord + " " + word, Toast.LENGTH_SHORT).show();
     }
 
     void resetVars(){
@@ -80,20 +86,36 @@ public class MainActivity extends Activity {
         hiddenWord = "";
         userGuess ="";
         match = false;
-        guessesRemaining = 6;
+        guessesRemaining = 7;
+        guessedletters = "";
+        englishDef = "";
+        index = 0;
     }
 
     private void checkAnswer(){
         //take the user's letter guess
         userGuess = guessText.getText().toString().toLowerCase();
 
+        userGuessChar = userGuess.toCharArray();
+        wordChars = word.toCharArray();
+
         //checks if user entered a valid letter
         if (isValidGuess(userGuess)==false){
             return;
         }
 
-        userGuessChar = userGuess.toCharArray();
-        wordChars = word.toCharArray();
+        //The next few lines handle accidental repeat guessesz
+        if (guessedletters.contains(userGuess)) {
+            Toast.makeText(MainActivity.this, "You already guessed that letter.",
+                    Toast.LENGTH_SHORT).show();
+            guessText.setHint("Type a letter here to guess");
+            guessText.setText("");
+            return;
+        }
+        else {
+            guessedletters = guessedletters + userGuess;
+            //Toast.makeText(MainActivity.this, "These are the guessed letters:" + guessedletters,  Toast.LENGTH_SHORT).show();
+        }
 
         for (int j = 0; j < word.length(); j++) {
 
@@ -110,20 +132,20 @@ public class MainActivity extends Activity {
         }
 
         if (match){
-            Toast.makeText(MainActivity.this, "'" + userGuess + "' is in the mystery word.  You " +
-                    "have " + guessesRemaining + " tries left to solve",
-                    Toast.LENGTH_SHORT).show();
+            checkForWin();
+            userGuess="";
             match = false;
         }
         else {
-            Toast.makeText(MainActivity.this, "'" + userGuess + "' is not in the mystery " +
-                    "word. You have " + guessesRemaining + " tries left to solve",
-                    Toast.LENGTH_SHORT).show();
             //decrement the guesses remaining
             guessesRemaining--;
 
             checkForLoss(); //checks if user is out of guesses
 
+            Toast.makeText(MainActivity.this, "'" + userGuess + "' is not in the mystery " +
+                    "word. You have " + guessesRemaining + " tries left to solve",
+                    Toast.LENGTH_SHORT).show();
+            userGuess="";
         }
 
         resetEditText();
@@ -153,13 +175,20 @@ public class MainActivity extends Activity {
 
     void checkForLoss(){
         if (guessesRemaining == 0){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+            WordList wordList = new WordList();
+
+            //if below doesn't work I might have to use preferences instead
+       /*     index = LoadPreferences("index", index);
+            englishDef = wordList.getEnglishDefs(index);*/
+
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("You ran out of attempts");
+            builder.setIcon(R.mipmap.ic_launcher);
             builder.setMessage("The answer was " + word + ". Play again?");
 
             builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-
                 public void onClick(DialogInterface dialog, int which) {
                     resetVars();
                     playGame();
@@ -168,7 +197,6 @@ public class MainActivity extends Activity {
             });
 
             builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     // Do nothing
@@ -186,5 +214,52 @@ public class MainActivity extends Activity {
         }
     }
 
+    void checkForWin(){
+        if (word.equals(hiddenWord)){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Felicidades / Congratulations");
+            builder.setIcon(R.mipmap.ic_launcher);
+            builder.setMessage("Buen trabajo! The word was " + word + ". Play again?");
+
+            builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    resetVars();
+                    playGame();
+                    dialog.dismiss();
+                }
+            });
+
+            builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do nothing
+                    dialog.dismiss();
+                    finish();
+                }
+            });
+
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+
+        else{
+            return;
+        }
+    }
+
+    //save prefs
+    public void savePrefs(String key, int value){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(key, value);
+        editor.commit();
+    }
+
+    //get prefs
+    private int LoadPreferences(String key, int value){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        int data = sharedPreferences.getInt(key, value);
+        return data;
+    }
 
 }
