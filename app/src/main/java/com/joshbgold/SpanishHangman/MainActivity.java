@@ -108,7 +108,7 @@ public class MainActivity extends Activity {
         if (guessedletters.contains(userGuess)) {
             Toast.makeText(MainActivity.this, "You already guessed that letter.",
                     Toast.LENGTH_SHORT).show();
-            guessText.setHint("Type a letter here to guess");
+            guessText.setHint("Type a letter here");
             guessText.setText("");
             return;
         }
@@ -158,7 +158,7 @@ public class MainActivity extends Activity {
     }
 
     private void resetEditText(){  //clears the letter from EditText area,re-adds hint text
-        guessText.setHint("Type a letter here to guess");
+        guessText.setHint("Type a letter here");
         guessText.setText("");
     }
 
