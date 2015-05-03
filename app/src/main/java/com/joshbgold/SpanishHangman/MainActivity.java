@@ -17,6 +17,8 @@ public class MainActivity extends Activity{
     private Button commonWordsButton;
     private Button exitButton;
 
+    private int wordListChoice = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,14 +63,16 @@ public class MainActivity extends Activity{
 
     void startGameWithVerbs() {
         //value of zero means to use verb word list
-       // savePrefs("choice", 0);
+        wordListChoice = 0;
+        savePrefs("choice", wordListChoice);
         Intent intent = new Intent(MainActivity.this, GameActivity.class);
         startActivity(intent);
     }
 
     void startGameWithCommonWords(){
         //value of one means to use common words list
-       // savePrefs("choice", 1);
+        wordListChoice = 1;
+        savePrefs("choice", wordListChoice);
         Intent intent = new Intent(MainActivity.this, GameActivity.class);
         startActivity(intent);
     }

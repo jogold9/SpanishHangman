@@ -51,17 +51,34 @@
             android:layout_marginLeft="10dp"
             android:maxLength="1"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" Presentar Conjetura / Submit Guess"
-            android:id="@+id/submitGuessButton"
-            android:layout_margin="5dp"
-            android:textAllCaps="false"
-            android:layout_gravity="start"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:background="@drawable/buttons"
-            android:layout_marginLeft="10dp"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Conjetura / Guess"
+                android:id="@+id/submitGuessButton"
+                android:layout_margin="5dp"
+                android:textAllCaps="false"
+
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:background="@drawable/buttons"
+                android:layout_marginLeft="10dp"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Pista / Hint"
+                android:id="@+id/hintButton"
+                android:background="@drawable/buttons"
+                android:layout_margin="5dp"
+                android:textAllCaps="false"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        </LinearLayout>
 
         <Button
             android:layout_width="wrap_content"
@@ -70,7 +87,7 @@
             android:id="@+id/exitButton"
             android:layout_margin="5dp"
             android:textAllCaps="false"
-            android:layout_gravity="start"
+
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:background="@drawable/buttons"
             android:layout_marginLeft="10dp"/>

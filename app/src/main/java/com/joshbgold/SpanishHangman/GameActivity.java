@@ -26,9 +26,11 @@ public class GameActivity extends MainActivity {
     private int guessesRemaining = 7;
     private int wordIndex = 0;
     boolean match = false;
+    private int wordListChoice = 0;
 
     private TextView someAnswer;
     private Button checkButton;
+    private Button hintButton;
     private Button exitButton;
     private EditText guessText;
     private ImageView skelatonImage;
@@ -40,9 +42,12 @@ public class GameActivity extends MainActivity {
 
         someAnswer = (TextView) findViewById(R.id.answerText);
         checkButton = (Button) findViewById(R.id.submitGuessButton);
+        hintButton = (Button) findViewById(R.id.hintButton);
         exitButton = (Button) findViewById(R.id.exitButton);
         guessText = (EditText) findViewById(R.id.letterGuess);
         skelatonImage = (ImageView) findViewById(R.id.skeleton);
+
+        wordListChoice = LoadPreferences("choice", wordListChoice);
 
         playGame();
 
@@ -51,6 +56,14 @@ public class GameActivity extends MainActivity {
             @Override
             public void onClick(View view) {
                 checkAnswer();
+            }
+        };
+
+        //get a hint button
+        View.OnClickListener getHint = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showEnglish();
             }
         };
 
@@ -63,6 +76,7 @@ public class GameActivity extends MainActivity {
        };
 
        checkButton.setOnClickListener(checkWord);
+       hintButton.setOnClickListener(getHint);
        exitButton.setOnClickListener(salida);
    }
 
@@ -71,11 +85,16 @@ public class GameActivity extends MainActivity {
         WordList wordList = new WordList();
 
         //get a random integer less than the length of the list of words
-        wordIndex = wordList.getWordIndex();
-
-        //get Spanish word and English definition
-        word = wordList.getVerb(wordIndex);
-        englishDef = wordList.getEnglishDef(wordIndex);
+        if(wordListChoice == 0) {
+            wordIndex = wordList.getWordIndex();
+            word = wordList.getVerb(wordIndex);
+            englishDef = wordList.getEnglishDef(wordIndex);
+        }
+        else{
+            wordIndex = wordList.getCommonWordIndex();
+            word = wordList.getCommonWords(wordIndex);
+            englishDef = wordList.getCommonDefs(wordIndex);
+        }
 
         //create a series of dashes or asterisks to represent the number of letters
         for (int i=0; i < word.length(); i++){
@@ -271,6 +290,10 @@ public class GameActivity extends MainActivity {
 
         resetEditText();
 
+    }
+
+    private void showEnglish(){
+        Toast.makeText(GameActivity.this, "The English definition is " + englishDef + ".", Toast.LENGTH_SHORT).show();
     }
 
     private void resetEditText(){  //clears the letter from EditText area,re-adds hint text

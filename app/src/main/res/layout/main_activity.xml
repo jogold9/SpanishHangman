@@ -41,7 +41,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" 1000 most common words"
+            android:text=" 100 Common Words"
             android:id="@+id/commonWordsButton"
             android:layout_margin="5dp"
             android:textAllCaps="false"
