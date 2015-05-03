@@ -3,11 +3,13 @@ package com.joshbgold.SpanishHangman;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +23,7 @@ public class GameActivity extends MainActivity {
     private String userGuess ="";
     char[] userGuessChar;
     private String guessedletters = "";
-    private int guessesRemaining = 2;
+    private int guessesRemaining = 7;
     private int wordIndex = 0;
     boolean match = false;
 
@@ -29,6 +31,7 @@ public class GameActivity extends MainActivity {
     private Button checkButton;
     private Button exitButton;
     private EditText guessText;
+    private ImageView skelatonImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,7 @@ public class GameActivity extends MainActivity {
         checkButton = (Button) findViewById(R.id.submitGuessButton);
         exitButton = (Button) findViewById(R.id.exitButton);
         guessText = (EditText) findViewById(R.id.letterGuess);
+        skelatonImage = (ImageView) findViewById(R.id.skeleton);
 
         playGame();
 
@@ -64,6 +68,7 @@ public class GameActivity extends MainActivity {
    }
 
     void playGame(){
+
         //get the word we are guessing letters for
         WordList wordList = new WordList();
         word = wordList.getVerb();
@@ -84,7 +89,7 @@ public class GameActivity extends MainActivity {
         hiddenWord = "";
         userGuess ="";
         match = false;
-        guessesRemaining = 2;
+        guessesRemaining = 7;
         guessedletters = "";
         englishDef = "";
         wordIndex = 0;
@@ -143,6 +148,105 @@ public class GameActivity extends MainActivity {
             //decrement the guesses remaining
             guessesRemaining--;
 
+            skelatonImage = (ImageView) findViewById(R.id.skeleton);
+
+            //draw a new image when a guess is wrong
+            if (guessesRemaining == 6) {
+                    if(skelatonImage != null) {
+                        ((BitmapDrawable) skelatonImage.getDrawable()).getBitmap().recycle();
+                        skelatonImage = (ImageView) findViewById(R.id.skeleton);
+                        skelatonImage.setImageResource(R.drawable.skeleton2);
+                    }
+                    else {
+                        skelatonImage = (ImageView) findViewById(R.id.imageView);
+                        skelatonImage.setImageResource(R.drawable.skeleton1);
+                    }
+            }
+
+            else if (guessesRemaining == 5) {
+                if(skelatonImage != null) {
+                    ((BitmapDrawable) skelatonImage.getDrawable()).getBitmap().recycle();
+                    skelatonImage = (ImageView) findViewById(R.id.skeleton);
+                    skelatonImage.setImageResource(R.drawable.skeleton3);
+                }
+                else {
+                    skelatonImage = (ImageView) findViewById(R.id.imageView);
+                    skelatonImage.setImageResource(R.drawable.skeleton1);
+                }
+            }
+
+            else if (guessesRemaining == 4) {
+                if(skelatonImage != null) {
+                    ((BitmapDrawable) skelatonImage.getDrawable()).getBitmap().recycle();
+                    skelatonImage = (ImageView) findViewById(R.id.skeleton);
+                    skelatonImage.setImageResource(R.drawable.skeleton4);
+                }
+                else {
+                    skelatonImage = (ImageView) findViewById(R.id.imageView);
+                    skelatonImage.setImageResource(R.drawable.skeleton1);
+                }
+            }
+
+            else if (guessesRemaining == 3) {
+                if(skelatonImage != null) {
+                    ((BitmapDrawable) skelatonImage.getDrawable()).getBitmap().recycle();
+                    skelatonImage = (ImageView) findViewById(R.id.skeleton);
+                    skelatonImage.setImageResource(R.drawable.skeleton5);
+                }
+                else {
+                    skelatonImage = (ImageView) findViewById(R.id.imageView);
+                    skelatonImage.setImageResource(R.drawable.skeleton1);
+                }
+            }
+
+            else if (guessesRemaining == 2) {
+                if(skelatonImage != null) {
+                    ((BitmapDrawable) skelatonImage.getDrawable()).getBitmap().recycle();
+                    skelatonImage = (ImageView) findViewById(R.id.skeleton);
+                    skelatonImage.setImageResource(R.drawable.skeleton6);
+                }
+                else {
+                    skelatonImage = (ImageView) findViewById(R.id.imageView);
+                    skelatonImage.setImageResource(R.drawable.skeleton1);
+                }
+            }
+
+            else if (guessesRemaining == 1) {
+                if(skelatonImage != null) {
+                    ((BitmapDrawable) skelatonImage.getDrawable()).getBitmap().recycle();
+                    skelatonImage = (ImageView) findViewById(R.id.skeleton);
+                    skelatonImage.setImageResource(R.drawable.skeleton7);
+                }
+                else {
+                    skelatonImage = (ImageView) findViewById(R.id.imageView);
+                    skelatonImage.setImageResource(R.drawable.skeleton1);
+                }
+            }
+
+            else if (guessesRemaining == 0) {
+                if(skelatonImage != null) {
+                    ((BitmapDrawable) skelatonImage.getDrawable()).getBitmap().recycle();
+                    skelatonImage = (ImageView) findViewById(R.id.skeleton);
+                    skelatonImage.setImageResource(R.drawable.skeleton7);
+                }
+                else {
+                    skelatonImage = (ImageView) findViewById(R.id.imageView);
+                    skelatonImage.setImageResource(R.drawable.skeleton1);
+                }
+            }
+
+            else {
+                if(skelatonImage != null) {
+                    ((BitmapDrawable) skelatonImage.getDrawable()).getBitmap().recycle();
+                    skelatonImage = (ImageView) findViewById(R.id.skeleton);
+                    skelatonImage.setImageResource(R.drawable.skeleton1);
+                }
+                else {
+                    skelatonImage = (ImageView) findViewById(R.id.imageView);
+                    skelatonImage.setImageResource(R.drawable.skeleton1);
+                }
+            }
+
             checkForLoss(); //checks if user is out of guesses
 
             Toast.makeText(GameActivity.this, "'" + userGuess + "' is not in the mystery " +
@@ -196,7 +300,7 @@ public class GameActivity extends MainActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("You ran out of attempts");
             builder.setIcon(R.mipmap.ic_launcher);
-            builder.setMessage("The answer was " + word + "). Play again?");
+            builder.setMessage("The answer was " + word + ". Play again?");
 
             builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
