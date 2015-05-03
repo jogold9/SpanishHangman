@@ -64,14 +64,18 @@ public class GameActivity extends MainActivity {
 
        checkButton.setOnClickListener(checkWord);
        exitButton.setOnClickListener(salida);
-
    }
 
     void playGame(){
 
-        //get the word we are guessing letters for
         WordList wordList = new WordList();
-        word = wordList.getVerb();
+
+        //get a random integer less than the length of the list of words
+        wordIndex = wordList.getWordIndex();
+
+        //get Spanish word and English definition
+        word = wordList.getVerb(wordIndex);
+        englishDef = wordList.getEnglishDef(wordIndex);
 
         //create a series of dashes or asterisks to represent the number of letters
         for (int i=0; i < word.length(); i++){
@@ -84,7 +88,7 @@ public class GameActivity extends MainActivity {
         //Toast.makeText(MainActivity.this, hiddenWord + " " + word, Toast.LENGTH_SHORT).show();
     }
 
-    void resetVars(){
+    void resetGame(){
         word = "";
         hiddenWord = "";
         userGuess ="";
@@ -93,6 +97,16 @@ public class GameActivity extends MainActivity {
         guessedletters = "";
         englishDef = "";
         wordIndex = 0;
+
+        if(skelatonImage != null) {
+            ((BitmapDrawable) skelatonImage.getDrawable()).getBitmap().recycle();
+            skelatonImage = (ImageView) findViewById(R.id.skeleton);
+            skelatonImage.setImageResource(R.drawable.skeleton1);
+        }
+        else {
+            skelatonImage = (ImageView) findViewById(R.id.imageView);
+            skelatonImage.setImageResource(R.drawable.skeleton1);
+        }
     }
 
     private void checkAnswer(){
@@ -293,18 +307,14 @@ public class GameActivity extends MainActivity {
     void checkForLoss(){
         if (guessesRemaining == 0){
 
-            //get the wordNumber for the current mystery word, & look up the English def.
-            //WordList wordList = new WordList();
-            //englishDef = wordList.getEnglishDefs(wordIndex);
-
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("You ran out of attempts");
             builder.setIcon(R.mipmap.ic_launcher);
-            builder.setMessage("The answer was " + word + ". Play again?");
+            builder.setMessage("The answer was " + word + " (" + englishDef + "). Play again?");
 
             builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    resetVars();
+                    resetGame();
                     playGame();
                     dialog.dismiss();
                 }
@@ -333,11 +343,11 @@ public class GameActivity extends MainActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Felicidades / Congratulations");
             builder.setIcon(R.mipmap.ic_launcher);
-            builder.setMessage("Buen trabajo! The word was " + word + ". Play again?");
+            builder.setMessage("Buen trabajo! The word was " + word + " (" + englishDef + "). Play again?");
 
             builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    resetVars();
+                    resetGame();
                     playGame();
                     dialog.dismiss();
                 }
