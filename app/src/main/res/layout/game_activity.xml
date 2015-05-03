@@ -10,14 +10,14 @@
               android:weightSum="1">
 
     <ImageView
-        android:layout_width="155dp"
+        android:layout_width="390dp"
         android:layout_height="311dp"
         android:id="@+id/skeleton"
-        android:scaleType="fitXY"
+        android:scaleType="fitCenter"
         android:src="@drawable/skeleton1"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="1.09"
-        android:layout_marginBottom="5dp"/>
+        android:layout_marginBottom="5dp"
+        android:layout_weight="0.33"/>
 
     <LinearLayout
         android:orientation="vertical"
