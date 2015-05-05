@@ -29,7 +29,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Spanish Verb Here"
+            android:text="*************"
             android:id="@+id/answerText"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="5dp"
@@ -40,21 +40,24 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Type a letter here"
+            android:hint="Type a letter to guess"
+            android:textColorHint="@android:color/white"
             android:id="@+id/letterGuess"
             android:textSize= "28dp"
             android:textAllCaps="false"
-            android:layout_gravity="start"
+            android:layout_gravity="center_horizontal"
             android:layout_marginBottom="5dp"
             android:textColor="@android:color/white"
             android:inputType="text"
-            android:layout_marginLeft="10dp"
-            android:maxLength="20"/>
+            android:maxLength="25"
+            android:background="#ff214b74"/>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            >
 
             <Button
                 android:layout_width="wrap_content"
@@ -66,7 +69,8 @@
 
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:background="@drawable/buttons"
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginLeft="10dp"
+                android:textColor="@android:color/white"/>
 
             <Button
                 android:layout_width="wrap_content"
@@ -76,7 +80,8 @@
                 android:background="@drawable/buttons"
                 android:layout_margin="5dp"
                 android:textAllCaps="false"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/white"/>
 
         </LinearLayout>
 
@@ -94,7 +99,8 @@
                 android:textAllCaps="false"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:background="@drawable/buttons"
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginLeft="10dp"
+                android:textColor="@android:color/white"/>
 
             <Button
                 android:layout_width="wrap_content"
@@ -105,7 +111,8 @@
                 android:textAllCaps="false"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:background="@drawable/buttons"
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginLeft="10dp"
+                android:textColor="@android:color/white"/>
         </LinearLayout>
 
     </LinearLayout>

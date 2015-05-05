@@ -23,14 +23,16 @@ public class WordList  {
 
     String CommonWords[] = {"semana", "año", "hoy", "mañana", "ayer", "calendario", "vez", "tiempo", "dia", "cosa", "hombre",
             "parte", "vida", "momento", "forma", "casa", "mundo", "mujer", "caso", "país", "lugar", "hora", "persona", "trabajo",
-            "punto", "mano", "manera", "fin", "tipo", "gente", "buenos días", "nos vemos", "buen provecho", "cuidate", "con permiso",
-            "No se preocupe", "esta tranquilo", "otra vez", "como se dice", "tiene sentido", "me parece bien", "esta bien"};
+            "punto", "mano", "manera", "fin", "tipo", "gente", "buenas días", "nos vemos", "buen provecho", "cuidate", "con permiso",
+            "No se preocupe", "esta tranquilo", "otra vez", "como se dice", "tiene sentido", "me parece bien", "esta bien",
+            "buenas tardes", "buenas noches", "creo que"};
 
     String CommonDefs[] =  {"week", "year", "today", "tomorrow", "yesterday", "calendar", "time", "time, weather", "day",
             "thing", "man", "part", "life", "moment", "form, shape", "house", "world", "woman, wife", "case, occasion",
-            "country", "place", "hour", "work, job", "point", "hand", "way", "end", "type, kind", "people", "good morning",
+            "country", "place", "hour", "person", "work, job", "point", "hand", "way", "end", "type, kind", "people", "good morning",
             "See you later", "enjoy your meal", "be careful, take care", "excuse me", "No worries", "No worries", "again",
-            "how does one say", "it makes sense", "seems good to me", "it's good"};
+            "how does one say", "it makes sense", "seems good to me", "it's good", "good evening", "good night",
+            "I believe that"};
 
     public int getWordIndex() {
         wordIndex = new Random().nextInt(SpanishVerbs.length);
