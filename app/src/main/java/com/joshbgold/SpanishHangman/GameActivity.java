@@ -337,7 +337,7 @@ public class GameActivity extends MainActivity {
 
     boolean isLetter (String userGuess){
         char someChar = userGuess.charAt(0);
-        if (!(Character.isLetter(someChar))){
+        if ((!(Character.isLetter(someChar)) && (someChar !=(' ')))){
             Toast.makeText(GameActivity.this, "You did not enter a letter.  Please type a " +
                     "letter and press submit button", Toast.LENGTH_SHORT).show();
 
@@ -397,7 +397,7 @@ public class GameActivity extends MainActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Felicidades / Congratulations");
                 builder.setIcon(R.mipmap.ic_launcher);
-                builder.setMessage("Buen trabajo! The word was " + word + " (" + englishDef + "). Play again?");
+                builder.setMessage("Buen trabajo! The answer was " + word + " (" + englishDef + "). Play again?");
 
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -432,7 +432,7 @@ public class GameActivity extends MainActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Felicidades / Congratulations");
             builder.setIcon(R.mipmap.ic_launcher);
-            builder.setMessage("Buen trabajo! The word was " + word + " (" + englishDef + "). Play again?");
+            builder.setMessage("Buen trabajo! The answer was " + word + " (" + englishDef + "). Play again?");
 
             builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
