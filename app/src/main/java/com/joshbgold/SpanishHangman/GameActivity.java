@@ -15,22 +15,24 @@ import android.widget.Toast;
 
 public class GameActivity extends MainActivity {
 
-    private String word = "";
+    private String word = "";  //stores the mystery word the user is trying to guess
     private String englishDef = "";
     private char wordChars[];
-    private String hiddenWord = "";
+    private String hiddenWord = ""; //Shows the number of characters to the user to aid in guessing
     private char hiddenWordChars[];
-    private String userGuess ="";
+    private String userGuess =""; //stores user's gueseed letter
     char[] userGuessChar;
-    private String guessedletters = "";
+    private String guessedletters = ""; //stores ALL user's guessed letters
     private int guessesRemaining = 7;
-    private int wordIndex = 0;
+    private int wordIndex = 0;  //used to help retrieve random word from the arrays
     boolean match = false;
-    private int wordListChoice = 0;
+    private int wordListChoice = 0; //choose either verb list (0), or nouns list (1)
+    private String userWordGuess = "";  //user can guess puzzle solution early, instead of 1 letter at a time
 
     private TextView someAnswer;
     private Button checkButton;
     private Button hintButton;
+    private Button solveButton;
     private Button exitButton;
     private EditText guessText;
     private ImageView skelatonImage;
@@ -43,6 +45,7 @@ public class GameActivity extends MainActivity {
         someAnswer = (TextView) findViewById(R.id.answerText);
         checkButton = (Button) findViewById(R.id.submitGuessButton);
         hintButton = (Button) findViewById(R.id.hintButton);
+        solveButton = (Button) findViewById(R.id.solveButton);
         exitButton = (Button) findViewById(R.id.exitButton);
         guessText = (EditText) findViewById(R.id.letterGuess);
         skelatonImage = (ImageView) findViewById(R.id.skeleton);
@@ -67,6 +70,14 @@ public class GameActivity extends MainActivity {
             }
         };
 
+        //try to solve the puzzle
+        View.OnClickListener solve = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkIfSolved();
+            }
+        };
+
        //exit the application when exit button is pressed
        View.OnClickListener salida = new View.OnClickListener() {
            @Override
@@ -77,6 +88,7 @@ public class GameActivity extends MainActivity {
 
        checkButton.setOnClickListener(checkWord);
        hintButton.setOnClickListener(getHint);
+        solveButton.setOnClickListener(solve);
        exitButton.setOnClickListener(salida);
    }
 
@@ -128,6 +140,8 @@ public class GameActivity extends MainActivity {
         guessedletters = "";
         englishDef = "";
         wordIndex = 0;
+        guessText.setHint("Type a letter here");
+        guessText.setText("");
     }
 
 
@@ -139,14 +153,16 @@ public class GameActivity extends MainActivity {
         wordChars = word.toCharArray();
 
         //checks if user entered a valid letter
-        if (isEmptyGuess(userGuess)==false){
+        if (!isEmptyGuess(userGuess)){
             return;
         }
 
-        if (isLetter(userGuess)== false){
+        if ((!isLetter(userGuess)) || (userGuess.length() > 1)){
+            Toast.makeText(GameActivity.this, "Lo siento, your guess must be a single letter.", Toast.LENGTH_SHORT).show();
+            guessText.setHint("Type a letter here");
+            guessText.setText("");
             return;
         }
-
 
         //The next few lines handle accidental repeat guessesz
         if (guessedletters.contains(userGuess)) {
@@ -176,7 +192,7 @@ public class GameActivity extends MainActivity {
         }
 
         if (match){
-            checkForWin();
+            gameIsWon();
             userGuess="";
             match = false;
         }
@@ -369,7 +385,49 @@ public class GameActivity extends MainActivity {
         }
     }
 
-    void checkForWin(){
+    void checkIfSolved(){
+
+        userWordGuess = guessText.getText() + "";
+
+        if(userWordGuess.equals("")){
+            guessText.setHint("Type answer, hit solve");
+        }
+        else {
+            if (userWordGuess.equals(word)) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Felicidades / Congratulations");
+                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setMessage("Buen trabajo! The word was " + word + " (" + englishDef + "). Play again?");
+
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        resetImages();
+                        resetGame();
+                        playGame();
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
+            } else {
+                Toast.makeText(GameActivity.this, "Lo siento, your guess no esta correct.", Toast.LENGTH_SHORT).show();
+                guessText.setHint("Type a letter here");
+                guessText.setText("");
+            }
+        }
+    }
+
+    void gameIsWon(){
         if (word.equals(hiddenWord)){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Felicidades / Congratulations");
@@ -414,8 +472,7 @@ public class GameActivity extends MainActivity {
     //get prefs
     private int LoadPreferences(String key, int value){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        int data = sharedPreferences.getInt(key, value);
-        return data;
+        return sharedPreferences.getInt(key, value);
     }
 
 }

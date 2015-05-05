@@ -49,7 +49,7 @@
             android:textColor="@android:color/white"
             android:inputType="text"
             android:layout_marginLeft="10dp"
-            android:maxLength="1"/>
+            android:maxLength="20"/>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -80,17 +80,33 @@
 
         </LinearLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text= " Salida / Exit"
-            android:id="@+id/exitButton"
-            android:layout_margin="5dp"
-            android:textAllCaps="false"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:background="@drawable/buttons"
-            android:layout_marginLeft="10dp"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Solucionar / Solve"
+                android:id="@+id/solveButton"
+                android:layout_margin="5dp"
+                android:textAllCaps="false"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:background="@drawable/buttons"
+                android:layout_marginLeft="10dp"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text= " Salida / Exit"
+                android:id="@+id/exitButton"
+                android:layout_margin="5dp"
+                android:textAllCaps="false"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:background="@drawable/buttons"
+                android:layout_marginLeft="10dp"/>
+        </LinearLayout>
 
     </LinearLayout>
 
