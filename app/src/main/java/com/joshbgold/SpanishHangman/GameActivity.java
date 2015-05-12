@@ -28,6 +28,11 @@ public class GameActivity extends MainActivity {
     boolean match = false;
     private int wordListChoice = 0; //choose either verb list (0), or nouns list (1)
     private String userWordGuess = "";  //user can guess puzzle solution early, instead of 1 letter at a time
+    
+    private int wins = 0;
+    private int totalAttempts = 0;
+    private int win_streak = 0;
+    private int ten_game_record[];
 
     private TextView someAnswer;
     private Button checkButton;
@@ -95,6 +100,8 @@ public class GameActivity extends MainActivity {
     void playGame(){
 
         WordList wordList = new WordList();
+
+        totalAttempts++; //used to calculate winning percentage
 
         //get a random integer less than the length of the list of words
         if(wordListChoice == 0) {
@@ -394,6 +401,9 @@ public class GameActivity extends MainActivity {
         }
         else {
             if (userWordGuess.equals(word)) {
+
+                wins++; //used to calculate winning percentage
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Felicidades / Congratulations");
                 builder.setIcon(R.mipmap.ic_launcher);

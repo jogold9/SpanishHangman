@@ -15,6 +15,7 @@ public class MainActivity extends Activity{
 
     private Button verbsButton;
     private Button commonWordsButton;
+    private Button statsButton;
     private Button exitButton;
 
     private int wordListChoice = 0;
@@ -27,6 +28,7 @@ public class MainActivity extends Activity{
 
         verbsButton = (Button) findViewById(R.id.verbsButton);
         commonWordsButton = (Button) findViewById(R.id.commonWordsButton);
+        statsButton = (Button) findViewById(R.id.statsButton);
         exitButton = (Button) findViewById(R.id.exitButton);
 
 
@@ -46,6 +48,13 @@ public class MainActivity extends Activity{
             }
         };
 
+        View.OnClickListener estadisticas = new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                openStats();
+            }
+        };
+
         //exit the application when exit button is pressed
         View.OnClickListener salida = new View.OnClickListener() {
             @Override
@@ -56,6 +65,7 @@ public class MainActivity extends Activity{
 
         verbsButton.setOnClickListener(verbs);
         commonWordsButton.setOnClickListener(commonWords);
+        statsButton.setOnClickListener(estadisticas);
         exitButton.setOnClickListener(salida);
 
     }
@@ -74,6 +84,11 @@ public class MainActivity extends Activity{
         wordListChoice = 1;
         savePrefs("choice", wordListChoice);
         Intent intent = new Intent(MainActivity.this, GameActivity.class);
+        startActivity(intent);
+    }
+
+    void openStats(){
+        Intent intent = new Intent (MainActivity.this, statsActivity.class);
         startActivity(intent);
     }
 

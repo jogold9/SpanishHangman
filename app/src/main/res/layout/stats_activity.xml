@@ -7,8 +7,7 @@
               android:gravity="bottom"
               android:orientation="vertical"
               android:background="@drawable/gradient"
-              android:weightSum="1"
-    >
+              android:weightSum="1">
 
     <LinearLayout
         android:orientation="vertical"
@@ -28,55 +27,56 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"/>
 
-        <Button
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" Verbos Comunes"
-            android:id="@+id/verbsButton"
-            android:layout_margin="5dp"
+            android:text="Win streak: 0 wins"
+            android:id="@+id/winStreakText"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.4"
+            android:textSize= "26dp"
             android:textAllCaps="false"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:background="@drawable/buttons"
+            android:layout_marginBottom="5dp"
+            android:textColor="@android:color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Win % last 10 games: n/a"
+            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.4"
+            android:textSize= "26dp"
+            android:textAllCaps="false"
+            android:layout_marginBottom="5dp"
+            android:textColor="@android:color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Overall win %: n/a"
+            android:id="@+id/percentText"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.4"
+            android:textSize= "26dp"
+            android:textAllCaps="false"
+            android:layout_marginBottom="5dp"
             android:textColor="@android:color/white"/>
 
         <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" Sustantivos y Frases"
-        android:id="@+id/commonWordsButton"
+        android:text= " Salida / Exit"
+        android:id="@+id/exitButton"
         android:layout_margin="5dp"
         android:textAllCaps="false"
-        android:layout_gravity="start"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:background="@drawable/buttons"
-        android:visibility="visible"
-        android:textColor="@android:color/white"/>
+        android:layout_marginLeft="10dp"
+        android:textColor="@android:color/white"
+        android:layout_gravity="center_horizontal"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" Estadísticas"
-            android:id="@+id/statsButton"
-            android:layout_margin="5dp"
-            android:textAllCaps="false"
-            android:layout_gravity="start"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:background="@drawable/buttons"
-            android:visibility="visible"
-            android:textColor="@android:color/white"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" Salida / Exit"
-            android:id="@+id/exitButton"
-            android:layout_margin="5dp"
-            android:layout_marginBottom="10dp"
-            android:textAllCaps="false"
-            android:layout_gravity="start"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:background="@drawable/buttons"
-            android:textColor="@android:color/white"/>
-    </LinearLayout>
+        </LinearLayout>
 
 </LinearLayout>
