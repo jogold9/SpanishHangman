@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.4"
-        android:weightSum="1">
+        android:weightSum="1"
+        >
 
         <ImageView
             android:layout_width="wrap_content"
@@ -44,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Win % last 10 games: n/a"
-            android:id="@+id/textView"
+            android:id="@+id/Last10Text"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.4"
             android:textSize= "26dp"

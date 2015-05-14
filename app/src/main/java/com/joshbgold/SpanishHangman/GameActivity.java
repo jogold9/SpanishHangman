@@ -28,10 +28,10 @@ public class GameActivity extends MainActivity {
     boolean match = false;
     private int wordListChoice = 0; //choose either verb list (0), or nouns list (1)
     private String userWordGuess = "";  //user can guess puzzle solution early, instead of 1 letter at a time
-    
-    private int wins = 0;
-    private int totalAttempts = 0;
-    private int win_streak = 0;
+
+    private int wins;
+    private int attempts;
+    private int win_streak;
     private int ten_game_record[];
 
     private TextView someAnswer;
@@ -56,6 +56,9 @@ public class GameActivity extends MainActivity {
         skelatonImage = (ImageView) findViewById(R.id.skeleton);
 
         wordListChoice = LoadPreferences("choice", wordListChoice);
+        wins = LoadPreferences("Wins", wins);
+        attempts = LoadPreferences("Attempts", attempts);
+        win_streak = LoadPreferences("Streak", win_streak);
 
         playGame();
 
@@ -87,6 +90,7 @@ public class GameActivity extends MainActivity {
        View.OnClickListener salida = new View.OnClickListener() {
            @Override
            public void onClick(View view) {
+
                finish();
            }
        };
@@ -101,7 +105,8 @@ public class GameActivity extends MainActivity {
 
         WordList wordList = new WordList();
 
-        totalAttempts++; //used to calculate winning percentage
+        attempts++; //used to calculate winning percentage
+        savePrefs("Attempts", attempts);
 
         //get a random integer less than the length of the list of words
         if(wordListChoice == 0) {
@@ -367,6 +372,8 @@ public class GameActivity extends MainActivity {
 
             builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
+                    win_streak = 0;
+                    savePrefs("Streak", win_streak);
                     resetImages();
                     resetGame();
                     playGame();
@@ -403,6 +410,10 @@ public class GameActivity extends MainActivity {
             if (userWordGuess.equals(word)) {
 
                 wins++; //used to calculate winning percentage
+                win_streak++;
+
+                savePrefs("Wins", wins);
+                savePrefs("Streak", win_streak);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Felicidades / Congratulations");
