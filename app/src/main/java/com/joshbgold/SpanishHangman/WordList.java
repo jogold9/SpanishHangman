@@ -34,7 +34,7 @@ public class WordList  {
     String CommonWords[] = {"semana", "año", "hoy", "mañana", "ayer", "calendario", "vez", "tiempo", "dia", "cosa", "hombre",
             "parte", "vida", "momento", "forma", "casa", "mundo", "mujer", "caso", "país", "lugar", "hora", "persona", "trabajo",
             "punto", "mano", "manera", "fin", "tipo", "gente", "buenas días", "nos vemos", "buen provecho", "cuidate", "con permiso",
-            "No se preocupe", "esta tranquilo", "otra vez", "como se dice", "tiene sentido", "me parece bien", "esta bien",
+            "no se preocupe", "esta tranquilo", "otra vez", "como se dice", "tiene sentido", "me parece bien", "esta bien",
             "buenas tardes", "buenas noches", "creo que", "comportamiento", "saludos", "tengo ganas de", "arriba", "abajo",
             "adentro", "igualmente", "mucho gusto", "que le vaya bien", "te toca a ti", "buena suerte", "buen viaje",
             "quizás", "buena idea", "felicitaciones", "bienvenidos", "primavera", "verano", "otoño", "invierno", "lunes",
