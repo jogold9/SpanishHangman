@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by JoshG on 5/11/2015.
  */
@@ -16,6 +18,7 @@ public class statsActivity extends MainActivity {
     private TextView Streak;
     private Button exitButton;
     private float winPercentage;
+    private String truncatedWinPercentage;
     private int wins;
     private int attempts;
     private int win_streak;
@@ -50,7 +53,8 @@ public class statsActivity extends MainActivity {
             float floatWins = wins;
             float floatTotalAttempts = attempts;
             winPercentage = ((floatWins / floatTotalAttempts) * 100);
-            overallWinPercent.setText("Overall Win %: " + winPercentage);
+            truncatedWinPercentage = new DecimalFormat("0.00").format(winPercentage);
+            overallWinPercent.setText("Overall Win %: " + truncatedWinPercentage);
 
             Streak.setText("Win streak: " + win_streak + " wins");
 

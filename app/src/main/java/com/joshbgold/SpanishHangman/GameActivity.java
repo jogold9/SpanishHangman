@@ -13,6 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameActivity extends MainActivity {
 
     private String word = "";  //stores the mystery word the user is trying to guess
@@ -32,7 +35,8 @@ public class GameActivity extends MainActivity {
     private int wins;
     private int attempts;
     private int win_streak;
-    private int ten_game_record[];
+    private List<Integer> lastTenGames = new ArrayList<Integer>();  //0 is a loss, 1 is a win
+    private int last10TotalWins;
 
     private TextView someAnswer;
     private Button checkButton;
@@ -365,6 +369,20 @@ public class GameActivity extends MainActivity {
     void checkForLoss(){
         if (guessesRemaining == 0){
 
+            win_streak = 0;
+            savePrefs("Streak", win_streak);
+
+            lastTenGames.add(0);
+
+            //remove the last integer if the arraylist size is more than ten
+            if(lastTenGames.size() > 10){
+                lastTenGames.remove(9);
+            }
+
+            for(int i = 0; i < lastTenGames.size(); i++){
+            last10TotalWins += lastTenGames.get(i);
+            }
+
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("You ran out of attempts");
             builder.setIcon(R.mipmap.ic_launcher);
@@ -372,8 +390,6 @@ public class GameActivity extends MainActivity {
 
             builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    win_streak = 0;
-                    savePrefs("Streak", win_streak);
                     resetImages();
                     resetGame();
                     playGame();
@@ -450,6 +466,14 @@ public class GameActivity extends MainActivity {
 
     void gameIsWon(){
         if (word.equals(hiddenWord)){
+
+            wins++; //used to calculate winning percentage
+            win_streak++;
+
+            savePrefs("Wins", wins);
+            savePrefs("Streak", win_streak);
+
+
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Felicidades / Congratulations");
             builder.setIcon(R.mipmap.ic_launcher);
