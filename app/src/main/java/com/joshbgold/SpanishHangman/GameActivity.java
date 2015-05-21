@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class GameActivity extends MainActivity {
 
@@ -35,8 +34,8 @@ public class GameActivity extends MainActivity {
     private int wins;
     private int attempts;
     private int win_streak;
-    private List<Integer> lastTenGames = new ArrayList<Integer>();  //0 is a loss, 1 is a win
-    private int last10TotalWins;
+
+    private ArrayList<String> lastTenGames = new ArrayList<>();
 
     private TextView someAnswer;
     private Button checkButton;
@@ -63,6 +62,10 @@ public class GameActivity extends MainActivity {
         wins = LoadPreferences("Wins", wins);
         attempts = LoadPreferences("Attempts", attempts);
         win_streak = LoadPreferences("Streak", win_streak);
+
+
+        TinyDB tinydb = new TinyDB(this);
+        lastTenGames = tinydb.getListString("LastTenGamesResults");
 
         playGame();
 
@@ -372,16 +375,17 @@ public class GameActivity extends MainActivity {
             win_streak = 0;
             savePrefs("Streak", win_streak);
 
-            lastTenGames.add(0);
-
-            //remove the last integer if the arraylist size is more than ten
+            //code for statistics for last ten games
+            lastTenGames.add("loss");
+            //remove the last item in the arraylist if the arraylist size has more than ten items
             if(lastTenGames.size() > 10){
                 lastTenGames.remove(9);
             }
 
-            for(int i = 0; i < lastTenGames.size(); i++){
-            last10TotalWins += lastTenGames.get(i);
-            }
+        /*  TinyDB class allows you to save ArrayLists and other variable types beyond ints & strings to preferences.
+            For more info, see https://github.com/kcochibili/TinyDB--Android-Shared-Preferences-Turbo*/
+            TinyDB tinydb = new TinyDB(this);
+            tinydb.putListString("LastTenGamesResults", lastTenGames);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("You ran out of attempts");
@@ -431,6 +435,18 @@ public class GameActivity extends MainActivity {
                 savePrefs("Wins", wins);
                 savePrefs("Streak", win_streak);
 
+                //code for statistics for last ten games
+                lastTenGames.add("win");
+                //remove the last item in the arraylist if the arraylist size has more than ten items
+                if(lastTenGames.size() > 10){
+                    lastTenGames.remove(9);
+                }
+
+        /*  TinyDB class allows you to save ArrayLists and other variable types beyond ints & strings to preferences.
+            For more info, see https://github.com/kcochibili/TinyDB--Android-Shared-Preferences-Turbo*/
+                TinyDB tinydb = new TinyDB(this);
+                tinydb.putListString("LastTenGamesResults", lastTenGames);
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Felicidades / Congratulations");
                 builder.setIcon(R.mipmap.ic_launcher);
@@ -472,6 +488,18 @@ public class GameActivity extends MainActivity {
 
             savePrefs("Wins", wins);
             savePrefs("Streak", win_streak);
+
+            //code for statistics for last ten games
+            lastTenGames.add("loss");
+            //remove the last item in the arraylist if the arraylist size has more than ten items
+            if(lastTenGames.size() > 10){
+                lastTenGames.remove(9);
+            }
+
+        /*  TinyDB class allows you to save ArrayLists and other variable types beyond ints & strings to preferences.
+            For more info, see https://github.com/kcochibili/TinyDB--Android-Shared-Preferences-Turbo*/
+            TinyDB tinydb = new TinyDB(this);
+            tinydb.putListString("LastTenGamesResults", lastTenGames);
 
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
